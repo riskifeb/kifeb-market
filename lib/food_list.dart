@@ -4,14 +4,9 @@ import 'package:kifeb/featured_food.dart';
 import 'package:kifeb/food_detail.dart';
 import 'package:kifeb/recomended_food.dart';
 
-class FoodList extends StatefulWidget {
+class FoodList extends StatelessWidget {
   const FoodList({super.key});
 
-  @override
-  State<FoodList> createState() => _FoodListState();
-}
-
-class _FoodListState extends State<FoodList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,49 +29,51 @@ class _FoodListState extends State<FoodList> {
           actions: [Image.asset("assets/profile.png")],
           elevation: 0,
         ),
-        body: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 20),
-              padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-              height: MediaQuery.of(context).size.height * 0.30,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  final FeaturedCard itemCards = featuredCard[index];
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return FoodDetailCard(
-                          itemsCard: itemCards,
-                        );
-                      }));
-                    },
-                    child: CardItem(
-                      itemCards: itemCards,
-                    ),
-                  );
-                },
-                itemCount: featuredCard.length,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                height: (Orientation == Orientation.landscape
+                    ? MediaQuery.of(context).size.height * 0.75
+                    : MediaQuery.of(context).size.height * 0.30),
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    final FeaturedCard itemCards = featuredCard[index];
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return FoodDetailCard(
+                            itemsCard: itemCards,
+                          );
+                        }));
+                      },
+                      child: CardItem(
+                        itemCards: itemCards,
+                      ),
+                    );
+                  },
+                  itemCount: featuredCard.length,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Rekomendasi Untukmu",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: "Poppins-Regular",
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black54),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            SingleChildScrollView(
-              child: Container(
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Rekomendasi Untukmu",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: "Poppins-Regular",
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black54),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Container(
                 child: Column(
                   children: [
                     Container(
@@ -111,11 +108,27 @@ class _FoodListState extends State<FoodList> {
                           imgUrl: "assets/feature-1.png",
                           price: "Rp. 15.000",
                         )),
+                    Container(
+                        margin: EdgeInsets.only(bottom: 8),
+                        child: RecomendedItem(
+                          name: "Salad Segar",
+                          rate: "4",
+                          imgUrl: "assets/feature-1.png",
+                          price: "Rp. 15.000",
+                        )),
+                    Container(
+                        margin: EdgeInsets.only(bottom: 8),
+                        child: RecomendedItem(
+                          name: "Salad Segar",
+                          rate: "4",
+                          imgUrl: "assets/feature-1.png",
+                          price: "Rp. 15.000",
+                        )),
                   ],
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ));
   }
 }
